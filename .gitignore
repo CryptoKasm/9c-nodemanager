@@ -1,0 +1,8 @@
+# Ignore generated files & directories
+settings.conf
+docker-compose.yml
+latest-snapshot
+vault
+9c-main-snapshot.zip
+logs
+DEMO_ACCOUNT

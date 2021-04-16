@@ -26,7 +26,7 @@ function buildDockerImage() {
     clean
 
     imageName="$repository:$version"
-    dockerFile=".devcontainer/Dockerfile-Prod"
+    dockerFile="./Dockerfile"
 
     docker build -f $dockerFile -t $imageName .
 

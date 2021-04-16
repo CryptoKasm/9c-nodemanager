@@ -3,7 +3,9 @@
 
 This project provides a quick auto-updatable solution for a Nine Chronicles node, for development purposes.
 
-Features:
+<br>
+
+### Features:
 - Auto-updates based on this URL: https://download.nine-chronicles.com/apv.json
 - Auto downloads snapshot
 - Generates new docker container as a node
@@ -14,30 +16,63 @@ Features:
 <br>
 
 ## Usage
-***Method 1: Instant Deploy (using Demo Account)***
+***Method 1: Instant Deploy via CMD***
 
 ```bash
-# Example: docker run 
-docker run -d -v "/var/run/docker.sock:/var/run/docker.sock" --name nodeManager cryptokasm/nodemanager:latest
+# Example using default settings & demo account
+docker run -d -v "/var/run/docker.sock:/var/run/docker.sock" \
+--name nodeManager cryptokasm/9c-nodemanager:latest
 
-# Example: docker-compose.yml
-
+# Example using custom settings or personal account
+docker run -d -v "/var/run/docker.sock:/var/run/docker.sock" \
+--name nodeManager cryptokasm/9c-nodemanager:latest \
+--privatekey=000000000000 \
+--graphql-port=1212 \
+--peer-port=3434
 ```
-***Method 2: Build Image & Deploy***
+
+<br>
+
+***Method 2: Instant Deploy via docker-compose.yml***
+
+```yml
+# Example using default settings & demo account
+services:
+  nodeManager:
+    image: cryptokaksm/9c-nodemanager
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    
+
+# Example using custom settings or personal account
+services:
+  nodeManager:
+    image: cryptokaksm/9c-nodemanager
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: [
+      '--privatekey=000000000000',
+      '--graphql-port=1212',
+      '--peer-port=3434'
+    ]
+    
+```
+
+<br>
+
+***Method 3: Build Image & Deploy***
 
 ```bash
-# Example: docker run 
-docker run -d -v "/var/run/docker.sock:/var/run/docker.sock" --name nodeManager cryptokasm/nodemanager:latest
-
-# Example: docker-compose.yml
+COMING SOON
 
 ```
 
 <br>
 
 ## References
-- https://docs.microsoft.com/en-us/windows/wsl/install-win10
-- https://docs.docker.com/docker-for-windows/install-windows-home/
+COMING SOON
+
+<br>
 
 # Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

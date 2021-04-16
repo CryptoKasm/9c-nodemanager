@@ -1,5 +1,4 @@
 # Ignore generated files & directories
-settings.conf
 docker-compose.yml
 latest-snapshot
 vault

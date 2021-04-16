@@ -14,8 +14,8 @@ services:
     mem_limit: $RAM_LIMIT
     mem_reservation: $RAM_RESERVE
     ports:
-      - "31270:31234"
-      - "23070:23061"
+      - "$PEER_PORT:31234"
+      - "$GRAPHQL_PORT:23061"
     volumes:
       - snapshot:/app/data
       - ./vault/keystore:/app/planetarium/keystore
@@ -51,16 +51,20 @@ services:
 volumes:
   snapshot:
 EOF
-
+  debug "Created new file"
 }
 
 ###############################
 mainDockerCompose() {
+    title "Generating docker-compose.yml.."
     if [ -f "docker-compose.yml" ]; then
+        debug "Found existing file"
         rm -f docker-compose.yml
+        debug "Deleted existing file"
         buildComposeFile
     else
         buildComposeFile
     fi
+    echo
 }
 ###############################

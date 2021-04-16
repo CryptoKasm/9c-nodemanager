@@ -50,7 +50,7 @@ testVol() {
     for OUTPUT in $(docker ps -aqf "name=^node" --no-trunc)
     do
         Dname=$(docker ps -af "id=$OUTPUT" --format {{.Names}})
-        VolChecker=$(docker exec 52153fe8fdcd8a4469025e2d3c16ca570442ea26c1214826ae8238c08f23785d [ -d "/app/data/9c-main" ])
+        VolChecker=$(docker exec $Dname [ -d "/app/data/9c-main" ])
         VolCheckerID=$?
         if [[ $VolCheckerID = "1" ]]; then
             debug "$Dname Snapshot Volumes are missing!"
@@ -76,7 +76,7 @@ testDockerRunning() {
 # Test: Refresh if older than 2 hrs
 testAge() {
     if [ -d "$SNAPUNZIP" ] && [ -f "$SNAPZIP" ]; then
-        debug "Found snapshot"
+        debug "Found existing snapshot"
         sudo chmod -R 700 $SNAPUNZIP
         if [[ $(find "9c-main-snapshot.zip" -type f -mmin +60) ]]; then
             debug "Refreshing snapshot" 
@@ -86,13 +86,15 @@ testAge() {
             testDockerRunning
         fi
     else
-        debug "testAge: False"
+        debug "No existing snapshot found"
         refreshSnapshot
     fi
 }
 
 ###############################
 mainSnapshot() {
+    title "Checking for snapshot..."
     testAge
+    echo
 }
 ###############################

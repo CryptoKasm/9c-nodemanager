@@ -33,4 +33,5 @@ RUN apt-get update \
     # Clean up
     && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /node/.devcontainer/library-scripts/
 
-CMD ["/bin/bash","./nodeManager.sh"]
+ENTRYPOINT ["./nodeManager.sh"]
+CMD ["--demo"]

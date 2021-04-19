@@ -4,10 +4,10 @@ FROM mcr.microsoft.com/vscode/devcontainers/base:0-buster
 LABEL project="nodeManager"
 LABEL maintainer="CryptoKasm"
 LABEL version="1.0.0-alpha"
-LABEL github="https://github.com/CryptoKasm/nodeManager"
+LABEL github="https://github.com/CryptoKasm/9c-nodemanager"
 LABEL discord="https://discord.gg/CYaSzs4CSk"
 
-WORKDIR /node
+WORKDIR /9c-node
 
 COPY . .
 

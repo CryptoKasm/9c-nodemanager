@@ -48,7 +48,6 @@ services:
       '--graphql-port=23061',
       '--graphql-secret-token-path=/secret/token',
       "--miner-private-key=$PRIVATE_KEY"]
-    restart: always
 volumes:
   snapshot:
 EOF

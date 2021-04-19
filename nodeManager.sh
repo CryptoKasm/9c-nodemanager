@@ -14,6 +14,16 @@ function clean() {
     sudo rm -rf vault
 }
 
+# Clean up generated files
+function cleanAll() {
+    sudo rm -f docker-compose.yml
+    sudo rm -rf latest-snapshot
+    sudo rm -f 9c-main-snapshot.zip
+    sudo rm -rf logs
+    sudo rm -rf vault
+    docker-compose down -v --remove-orphans
+}
+
 # Start docker container in detached mode
 function startDocker() {
     title "Starting docker..."
@@ -68,23 +78,33 @@ for i in "$@"
 do
 case $i in
 
-  --privatekey=*)
+  --private-key=*)
     SET_PRIVATE_KEY="${i#*=}"
-    debug $SET_PRIVATE_KEY
+    debug "User set privatekey: $SET_PRIVATE_KEY"
     ;;
   
   --graphql-port=*)
     SET_GRAPHQL_PORT="${i#*=}"
-    debug $SET_GRAPHQL_PORT
+    debug "User set graphql-port: $SET_GRAPHQL_PORT"
     ;;
 
   --peer-port=*)
     SET_PEER_PORT="${i#*=}"
-    debug $SET_PEER_PORT
+    debug "User set peer-port: $SET_PEER_PORT"
+    ;;
+
+  --cors-policy=*)
+    SET_CORS_POLICY="${i#*=}"
+    debug "User set cors-policy: $SET_CORS_POLICY"
     ;;
 
   --clean)
     clean
+    exit 0
+    ;;
+
+  --clean-all)
+    cleanAll
     exit 0
     ;;
 

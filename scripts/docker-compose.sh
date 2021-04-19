@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Generate docker-compose.yml
-buildComposeFile() {
-    COMPOSEFILE=docker-compose.yml
+function buildComposeFile() {
+  COMPOSEFILE=docker-compose.yml
 
-    cat <<EOF >$COMPOSEFILE
+  cat <<EOF >$COMPOSEFILE
 version: "2.4"
 
 services:
@@ -43,7 +43,7 @@ services:
       '--ice-server=turn://0ed3e48007413e7c2e638f13ddd75ad272c6c507e081bd76a75e4b7adc86c9af:0apejou+ycZFfwtREeXFKdfLj2gCclKzz5ZJ49Cmy6I=@turn-us3.planetarium.dev:3478',
       '--ice-server=turn://0ed3e48007413e7c2e638f13ddd75ad272c6c507e081bd76a75e4b7adc86c9af:0apejou+ycZFfwtREeXFKdfLj2gCclKzz5ZJ49Cmy6I=@turn-us4.planetarium.dev:3478',
       '--ice-server=turn://0ed3e48007413e7c2e638f13ddd75ad272c6c507e081bd76a75e4b7adc86c9af:0apejou+ycZFfwtREeXFKdfLj2gCclKzz5ZJ49Cmy6I=@turn-us5.planetarium.dev:3478',
-      '--no-cors',
+      $CORS_POLICY_ENTRY
       '--graphql-server',
       '--graphql-port=23061',
       '--graphql-secret-token-path=/secret/token',
@@ -54,16 +54,28 @@ EOF
   debug "Created new file"
 }
 
+# Add/Remove arguments from docker-compose.yml
+function runtimeArgs() {  
+  if [ "$CORS_POLICY" == true ]; then 
+    CORS_POLICY_ENTRY=''
+    debug $CORS_POLICY_ENTRY
+  else
+    CORS_POLICY_ENTRY=''\'--no-cors\',''
+    debug $CORS_POLICY_ENTRY
+  fi
+}
+
 ###############################
-mainDockerCompose() {
+function mainDockerCompose() {
     title "Generating docker-compose.yml.."
+    runtimeArgs
     if [ -f "docker-compose.yml" ]; then
-        debug "Found existing file"
-        rm -f docker-compose.yml
-        debug "Deleted existing file"
-        buildComposeFile
+      debug "Found existing file"
+      rm -f docker-compose.yml
+      debug "Deleted existing file"
+      buildComposeFile
     else
-        buildComposeFile
+      buildComposeFile
     fi
     echo
 }

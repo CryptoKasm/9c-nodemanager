@@ -39,7 +39,7 @@ function title() {
 
 # Display styled text for debugging
 function debug() {  
-    if [ "$DEBUG" == 1 ]; then 
+    if [ "$DEBUG" == true ]; then 
         echo -e $Magenta"  - Debug: $1"$RS
     fi
 }
@@ -74,6 +74,7 @@ function checkSettings() {
         debug "Debug: $DEBUG"
         debug "Private Key: $PRIVATE_KEY"
         debug "GraphQL Port: $GRAPHQL_PORT"
+        debug "CORS Policy: $CORS_POLICY"
         debug "Peer Port: $PEER_PORT"
         debug "RAM Limit: $RAM_LIMIT"
         debug "RAM Reserve: $RAM_RESERVE"

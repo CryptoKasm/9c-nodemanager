@@ -4,10 +4,11 @@ FROM mcr.microsoft.com/vscode/devcontainers/base:0-buster
 LABEL project="nodeManager"
 LABEL maintainer="CryptoKasm"
 LABEL version="1.0.0-alpha"
-LABEL github="https://github.com/CryptoKasm/nodeManager"
+LABEL github="https://github.com/CryptoKasm/9c-nodemanager"
 LABEL discord="https://discord.gg/CYaSzs4CSk"
 
-WORKDIR /node
+ARG WORKDIRP="/9c-node"
+WORKDIR ${WORKDIRP}
 
 COPY . .
 
@@ -27,11 +28,11 @@ ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
 RUN apt-get update \
-    && /bin/bash /node/.devcontainer/library-scripts/common-debian.sh "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}" "true" "true" \
+    && /bin/bash ${WORKDIRP}/.devcontainer/library-scripts/common-debian.sh "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}" "true" "true" \
     # Use Docker script from script library to set things up
-    && /bin/bash /node/.devcontainer/library-scripts/docker-debian.sh "${ENABLE_NONROOT_DOCKER}" "/var/run/docker-host.sock" "/var/run/docker.sock" "${USERNAME}" "${USE_MOBY}" \
+    && /bin/bash ${WORKDIRP}/.devcontainer/library-scripts/docker-debian.sh "${ENABLE_NONROOT_DOCKER}" "/var/run/docker-host.sock" "/var/run/docker.sock" "${USERNAME}" "${USE_MOBY}" \
     # Clean up
-    && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /node/.devcontainer/library-scripts/
+    && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* ${WORKDIRP}/.devcontainer/library-scripts/
 
 ENTRYPOINT ["./nodeManager.sh"]
 CMD ["--demo"]

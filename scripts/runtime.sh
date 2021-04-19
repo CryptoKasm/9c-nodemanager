@@ -36,11 +36,24 @@ function setPeerPort() {
     fi
 }
 
+# Set Peer Port if argument provided
+function setCorsPolicy() {
+    debug "CORS Policy (from settings.conf): $CORS_POLICY"
+    if [ -n "$SET_CORS_POLICY" ]; then
+        debug "Entered Cors Policy : $SET_CORS_POLICY"
+        CORS_POLICY=$SET_CORS_POLICY
+        debug "New Cors Policy : $CORS_POLICY"
+    else
+        debug "SET_PEER_PORT is empty."
+    fi
+}
+
 # Check arguments at runtime to set variables
 function checkRuntime () {
     title "Checking runtime arguments..."
     setPrivateKey
     setGraphqlPort
     setPeerPort
+    setCorsPolicy
     echo
 }

@@ -46,29 +46,28 @@ testVol() {
     docker-compose up -d       # Restarts to recreate clean environment
     docker-compose stop
 
+    OUTPUT=$(docker ps -aqf "name=^node" --no-trunc)
+    Dname=$(docker ps -af "id=$OUTPUT" --format {{.Names}})
+    VolChecker=$(docker exec $Dname [ -d "/app/data/9c-main" ])
+    VolCheckerID=$?
 
-    for OUTPUT in $(docker ps -aqf "name=^node" --no-trunc)
-    do
-        Dname=$(docker ps -af "id=$OUTPUT" --format {{.Names}})
-        VolChecker=$(docker exec $Dname [ -d "/app/data/9c-main" ])
-        VolCheckerID=$?
-        if [[ $VolCheckerID = "1" ]]; then
-            debug "$Dname Snapshot Volumes are missing!"
-            cd latest-snapshot
-            copyVolume
-        else
-            debug "$Dname Snapshot Volumes are current!"
-        fi
-        done
+    if [[ $VolCheckerID = "1" ]]; then
+        debug "$Dname Snapshot Volumes are missing!"
+        echo "Current Dir: $(pwd)"
+        cd latest-snapshot
+        copyVolume
+    else
+        debug "$Dname Snapshot Volumes are current!"
+    fi
 
-        debug $Dname
-        debug $VolChecker
-        debug $VolCheckerID
+    debug $Dname
+    debug $VolChecker
+    debug $VolCheckerID
 }
 
 # Test: Ignore Volume test if docker containers are running
 testDockerRunning() {
-    if [ ! "$(docker ps -qf "name=^childNode")" ]; then
+    if [ ! "$(docker ps -qf "name=^node")" ]; then
         testVol
     fi
 }

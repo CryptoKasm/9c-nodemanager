@@ -1,5 +1,5 @@
 ### Nine Chronicles | Development Tool
-# Project: nodeManager
+# nodeManager
 
 This project provides a quick auto-updatable solution for a Nine Chronicles node, for development purposes.
 

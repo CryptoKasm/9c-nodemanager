@@ -47,7 +47,7 @@ function buildDockerImage() {
 # Run docker image with parameters
 function runDockerImage() {
     imageName="$repository:$version"
-    docker run -d -v "/var/run/docker.sock:/var/run/docker.sock" --name nodeManager $imageName
+    docker run -d -v "/var/run/docker.sock:/var/run/docker.sock" --name 9c-nodeManager $imageName
 }
 
 # Demo information

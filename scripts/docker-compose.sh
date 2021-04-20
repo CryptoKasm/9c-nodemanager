@@ -18,8 +18,8 @@ services:
       - "$GRAPHQL_PORT:23061"
     volumes:
       - snapshot:/app/data
-      - ./vault/keystore:/app/planetarium/keystore
-      - ./vault/secret:/secret
+      - snapshot:/app/planetarium/keystore
+      - snapshot:/secret
     logging:
       driver: "json-file"
       options:

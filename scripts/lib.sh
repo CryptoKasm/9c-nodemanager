@@ -91,7 +91,7 @@ function checkParams() {
     BUILDPARAMS="https://download.nine-chronicles.com/apv.json"
     APV=`curl --silent $BUILDPARAMS | jq -r '.apv'`
     DOCKERIMAGE=`curl --silent $BUILDPARAMS | jq -r '.docker'`
-    SNAPSHOT=`curl --silent $BUILDPARAMS | jq -r '."snapshotPaths:"[0]'`
+    SNAPSHOT=`curl --silent $BUILDPARAMS | jq -r '."snapshotPaths"[0]'`
 
     title "Loading apv.json..."
     debug "URL: $BUILDPARAMS"
